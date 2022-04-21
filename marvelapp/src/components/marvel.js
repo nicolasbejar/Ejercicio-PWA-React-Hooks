@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 function Marvel(){
 
-    const [joke, setJoke] = useState({});
+    const [joke, setJoke] = useState("");
 
     useEffect(()=>{
 
