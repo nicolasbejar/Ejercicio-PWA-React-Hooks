@@ -9,10 +9,11 @@ function Marvel(){
             if(localStorage.getItem("indicator") == null) {
                 console.log("Sin conexión y sin cache")
                 console.log(localStorage.getItem("heros"))
+                
             } else {
                 console.log("Sin conexión y con cache")
-                console.log(localStorage.getItem("heros"))
-                setJoke(localStorage.getItem("heros"));
+                console.log(JSON.parse(localStorage.getItem("heros")))
+                setJoke(JSON.parse(localStorage.getItem("heros")));
             }
         } else {
             console.log("Con conexión")
@@ -21,20 +22,35 @@ function Marvel(){
                 console.log(res.data.results)
                 setJoke(res.data.results);
                 localStorage.setItem("indicator", "Cargar");
-                localStorage.setItem("heros", res.data.results);
+                localStorage.setItem("heros", JSON.stringify(res.data.results));
             })
         }
     }, []);
-
-    return(
-        <div>
-        {joke.map(hero => (
+    
+    if(!navigator.onLine && localStorage.getItem("indicator") == null ){
+        return(
             <div>
-                <p>{hero.name}</p>
+                <p>Loading....</p>
             </div>
-        ))}
-        </div>
-    )
+        )
+    }
+    else{
+        return(
+            joke.map(hero => (
+                <div className="col-lg-3 ">
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="card-title">{hero.name}</h5>
+                            <p className="card-text">{hero.description}</p>
+                        </div>
+                    </div>
+                </div>
+            ))
+        )
+    }
 }
+
+
+
 
 export default Marvel;

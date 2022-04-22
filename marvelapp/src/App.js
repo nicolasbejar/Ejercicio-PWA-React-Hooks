@@ -6,7 +6,12 @@ import Marvel from './components/marvel';
 function App() {
   return (
     <div className="App">
-      <Marvel/>
+      <div className="container">
+        <h1>Marvel Heroes</h1>
+        <div className="row"> 
+          <Marvel/>
+        </div>
+      </div>
     </div>
   );
 }
