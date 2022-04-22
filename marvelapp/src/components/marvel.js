@@ -6,19 +6,22 @@ function Marvel(){
 
     useEffect(()=>{
         if(!navigator.onLine){
-            if(localStorage.getItem("joke") === null) {
+            if(localStorage.getItem("indicator") == null) {
                 console.log("Sin conexión y sin cache")
+                console.log(localStorage.getItem("heros"))
             } else {
                 console.log("Sin conexión y con cache")
-                setJoke(localStorage.getItem("joke"));
+                console.log(localStorage.getItem("heros"))
+                setJoke(localStorage.getItem("heros"));
             }
         } else {
             console.log("Con conexión")
             const URL = "https://gateway.marvel.com:443/v1/public/characters?ts=173534988375&apikey=108b2e2548eb4b8d7e638116256aa10f&hash=f110989889cec9ccf39d344380e8130b";
             fetch(URL).then(res=>res.json()).then(res=>{
-                console.log(res.data.results[0].thumbnail.path)
-                localStorage.setItem("joke", res.data.results);
+                console.log(res.data.results)
                 setJoke(res.data.results);
+                localStorage.setItem("indicator", "Cargar");
+                localStorage.setItem("heros", res.data.results);
             })
         }
     }, []);
@@ -27,7 +30,6 @@ function Marvel(){
         <div>
         {joke.map(hero => (
             <div>
-                <img src={hero.thumbnail.path} alt={hero.name}></img>
                 <p>{hero.name}</p>
             </div>
         ))}
